@@ -14,13 +14,15 @@ private:
 
 public:
 	Stack();
+	Stack(const Stack<T>& Object);
 	size_t count() const;
 	void push(T const &);
 	T pop();
 	T last() const;
 	void print();
-
+	Stack<T>& operator=(const Stack<T>& Object);
 };
+
 
 
 template <typename T>
@@ -29,6 +31,19 @@ Stack<T>::Stack() {
 	array_size_ = 0;
 	count_ = 0;
 }
+
+
+template <typename T>
+Stack<T>::Stack(const Stack<T>& Object)
+ {
+	array_size_ = Object.array_size_;
+	count_ = Object.count_;
+	array_ = new int[array_size_];
+	
+		for (int i = 0; i < count_; i++)
+		 array_[i] = Object.array_[i];
+	}
+
 
 template <typename T>
 size_t Stack<T>::count() const {
@@ -82,3 +97,19 @@ void Stack<T>::print()
 		cout << array_[i] << " ";
 	cout << endl;
 }
+
+
+template<typename T>
+Stack<T>& Stack<T>::operator=(const Stack<T>& Object)
+ {
+	if (&Object != this)
+		 {
+		delete[] array_;
+		count_ = Object.count_;
+		array_size_ = Object.array_size_;
+		array_ = new int[array_size_];
+		for (unsigned int i = 0; i < count_; i++)
+			 array_[i] = Object.array_[i];
+		}
+	return *this;
+	}
